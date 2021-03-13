@@ -30,4 +30,12 @@ const list = blessed.list({
   parent: screen,
 });
 
+list.key('x', function() {
+  const noteToDelete = db.get(`notes[${this.selected}]`).value();
+  db.get('notes').remove({ title: noteToDelete.title }).write();
+  list.removeItem(this.selected);
+  list.render();
+  screen.render();
+})
+
 module.exports = list;
