@@ -1,4 +1,10 @@
-const fakeNotes = [
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+
+const adapters = new FileSync('db.json');
+const db = low(adapters);
+
+const notes = [
   {
     title: 'test',
     content: 'very long string',
@@ -9,4 +15,6 @@ const fakeNotes = [
   },
 ];
 
-module.exports = fakeNotes;
+db.defaults({ notes }).write();
+
+module.exports = db;
