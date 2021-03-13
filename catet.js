@@ -1,23 +1,7 @@
 #!/usr/bin/env node
 const blessed = require('blessed');
-
-const fakeNotes = [
-  {
-    title: 'test',
-    content: 'very long string',
-  },
-  {
-    title: 'test 2',
-    content: 'WOOOOOWWW',
-  },
-];
-
-const screen = blessed.screen({
-  smartCSR: true,
-  autoPadding: true,
-});
-
-screen.title = 'Catet | Simple TUI Notes Taking App';
+const notes = require('./src/db');
+const screen = require('./src/screen');
 
 const notesForm = blessed.form({
   left: 1,
@@ -58,23 +42,13 @@ const notesListBox = blessed.list({
   keys: true,
   vi: true,
   search: true,
-  items: fakeNotes.map(n => n.title),
+  items: notes.map(n => n.title),
   parent: screen,
 });
 
-// Quit on Escape, q, or Control-C.
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
-  return process.exit(0);
-});
-
-screen.key('a', () => {
-  notesInput.clearValue();
-  screen.render();
-  notesInput.focus()
-});
 
 notesInput.on('submit', function() {
-  fakeNotes.push({
+  notes.push({
     title: this.value,
     content: '',
   })
