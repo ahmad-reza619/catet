@@ -1,6 +1,8 @@
 const blessed = require('blessed');
 const db = require('./db');
 const screen = require('./screen');
+const { contentInput } = require('./input');
+const selectedStore = require('./store');
 
 const list = blessed.list({
   top: 3,
@@ -36,6 +38,26 @@ list.key('x', function() {
   list.removeItem(this.selected);
   list.render();
   screen.render();
+});
+
+list.key(['j', 'down'], function() {
+  selectedStore.getState().inc();
+  const selected = selectedStore.getState().selected;
+  const notes = db.get('notes').value();
+  contentInput.setValue(notes[selected].content)
+  screen.render();
+})
+
+list.key(['k', 'up'], function() {
+  selectedStore.getState().decr();
+  const selected = selectedStore.getState().selected;
+  const notes = db.get('notes').value();
+  contentInput.setValue(notes[selected].content)
+  screen.render();
+})
+
+list.key('enter', function() {
+  contentInput.focus();
 })
 
 module.exports = list;
