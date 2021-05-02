@@ -7,7 +7,7 @@ const selectedStore = require('./store');
 const addForm = blessed.form({
   left: 1,
   width: '50%',
-  height: 3,
+  height: '7%',
   parent: screen,
   border: {
     type: 'line',

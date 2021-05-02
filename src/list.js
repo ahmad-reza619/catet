@@ -5,10 +5,10 @@ const { contentInput } = require('./input');
 const selectedStore = require('./store');
 
 const list = blessed.list({
-  top: 3,
+  top: '7%',
   left: 1,
   width: '50%',
-  height: '90%',
+  height: '91%',
   tags: true,
   border: {
     type: 'line'
